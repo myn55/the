@@ -1,0 +1,20 @@
+-- Author: Coronhaus
+local shared = require(script.Parent:WaitForChild('shared'))
+local stats = shared.RemoteEvents:WaitForChild('Stats')
+local players = game:GetService('Players')
+
+local Money = stats:WaitForChild('Money')
+local SetMoney = Money:WaitForChild('SetMoney')
+local GetMoney = Money:WaitForChild('GetMoney')
+
+SetMoney.OnServerEvent:connect(function(p, mode, v)
+	if players:FindFirstChild(p.Name) then
+		print('$playerstats SetMoney', p, mode, v)
+		local money = p.leaderstats.Money
+		if mode == 'add' then
+			money.Value = money.Value + v
+		elseif mode == 'sub' then
+			money.Value = money.Value - v
+		end
+	end
+end)
